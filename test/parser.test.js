@@ -66,7 +66,7 @@ describe('useragent', function () {
       assume(agent.toVersion()).equals('0.0.0');
       assume(agent.toString()).equals('Other 0.0.0 / Other 0.0.0');
       assume(agent.toAgent()).equals('Other 0.0.0');
-      assume(JSON.stringify(agent)).equals('{"family":"Other","major":"0","minor":"0","patch":"0","device":{"family":"Other","major":"0","minor":"0","patch":"0"},"os":{"family":"Other","major":"0","minor":"0","patch":"0"}}');
+      assume(JSON.stringify(agent)).equals('{"family":"Other","major":"0","minor":"0","patch":"0","device":{"family":"Other","major":"0","minor":"0","patch":"0","brand":"Other","model":"Other"},"os":{"family":"Other","major":"0","minor":"0","patch":"0"}}');
     });
 
     it('should not throw errors on empty strings and default to unkown', function () {
@@ -81,7 +81,7 @@ describe('useragent', function () {
       assume(agent.toVersion()).equals('0.0.0');
       assume(agent.toString()).equals('Other 0.0.0 / Other 0.0.0');
       assume(agent.toAgent()).equals('Other 0.0.0');
-      assume(JSON.stringify(agent)).equals('{"family":"Other","major":"0","minor":"0","patch":"0","device":{"family":"Other","major":"0","minor":"0","patch":"0"},"os":{"family":"Other","major":"0","minor":"0","patch":"0"}}');
+      assume(JSON.stringify(agent)).equals('{"family":"Other","major":"0","minor":"0","patch":"0","device":{"family":"Other","major":"0","minor":"0","patch":"0","brand":"Other","model":"Other"},"os":{"family":"Other","major":"0","minor":"0","patch":"0"}}');
     });
 
     it('should correctly parse chromes user agent', function () {
@@ -96,7 +96,7 @@ describe('useragent', function () {
       assume(agent.toVersion()).equals('15.0.874');
       assume(agent.toString()).equals('Chrome 15.0.874 / Mac OS X 10.7.1');
       assume(agent.toAgent()).equals('Chrome 15.0.874');
-      assume(JSON.stringify(agent)).equals('{"family":"Chrome","major":"15","minor":"0","patch":"874","device":{"family":"Other","major":"0","minor":"0","patch":"0"},"os":{"family":"Mac OS X","major":"10","minor":"7","patch":"1"}}');
+      assume(JSON.stringify(agent)).equals('{"family":"Chrome","major":"15","minor":"0","patch":"874","device":{"family":"Mac","major":"0","minor":"0","patch":"0","brand":"Apple","model":"Mac"},"os":{"family":"Mac OS X","major":"10","minor":"7","patch":"1"}}');
     });
 
     it('correctly parses iOS8', function () {

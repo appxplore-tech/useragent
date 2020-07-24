@@ -103,13 +103,64 @@ Object.defineProperty(Agent.prototype, 'device', {
       , parsers = deviceparsers
       , i = 0
       , parser
-      , res;
+      , res
+      , result=[];
 
     for (; i < length; i++) {
+      
       if (res = parsers[i][0].exec(userAgent)) {
         parser = parsers[i];
 
-        if (parser[1]) res[1] = parser[1].replace('$1', res[1]);
+        if (parser[1]) {
+          let temp = parser[1]
+          if(temp.indexOf('$1') >= 0) {
+            temp = temp.replace('$1', res[1]);
+          }
+          if(temp.indexOf('$2') >= 0) {
+            temp = temp.replace('$2', res[2]);
+          }
+          if(temp.indexOf('$3') >= 0) {
+            temp = temp.replace('$3', res[3]);
+          }
+          if(temp.indexOf('$4') >= 0) {
+            temp = temp.replace('$4', res[4]);
+          }
+          result[1] = temp
+        }
+
+        if (parser[5]) {
+          let temp = parser[5]
+          if(temp.indexOf('$1') >= 0) {
+            temp = temp.replace('$1', res[1]);
+          }
+          if(temp.indexOf('$2') >= 0) {
+            temp = temp.replace('$2', res[2]);
+          }
+          if(temp.indexOf('$3') >= 0) {
+            temp = temp.replace('$3', res[3]);
+          }
+          if(temp.indexOf('$4') >= 0) {
+            temp = temp.replace('$4', res[4]);
+          }
+          result[5] = temp
+        }
+        
+        if (parser[6]) {
+          let temp = parser[6]
+          if(temp.indexOf('$1') >= 0) {
+            temp = temp.replace('$1', res[1]);
+          }
+          if(temp.indexOf('$2') >= 0) {
+            temp = temp.replace('$2', res[2]);
+          }
+          if(temp.indexOf('$3') >= 0) {
+            temp = temp.replace('$3', res[3]);
+          }
+          if(temp.indexOf('$4') >= 0) {
+            temp = temp.replace('$4', res[4]);
+          }
+          result[6] = temp
+        }
         break;
       }
     }
@@ -118,10 +169,12 @@ Object.defineProperty(Agent.prototype, 'device', {
         value: !parser || !res
           ? new Device()
           : new Device(
-                res[1]
-              , parser[2] || res[2]
-              , parser[3] || res[3]
-              , parser[4] || res[4]
+              result[1]
+              , parser[2] || result[2]
+              , parser[3] || result[3]
+              , parser[4] || result[4]
+              , result[5]
+              , result[6]
             )
     }).device;
   },
@@ -292,11 +345,13 @@ OperatingSystem.prototype.toJSON = function toJSON(){
  * @param {String} patch Patch version of the device
  * @api public
  */
-function Device(family, major, minor, patch) {
+function Device(family, major, minor, patch, brand, model) {
   this.family = family || 'Other';
   this.major = major || '0';
   this.minor = minor || '0';
   this.patch = patch || '0';
+  this.brand = brand || 'Other';
+  this.model = model || 'Other';
 }
 
 /**
@@ -352,6 +407,8 @@ Device.prototype.toJSON = function toJSON() {
     , major: this.major || undefined
     , minor: this.minor || undefined
     , patch: this.patch || undefined
+    , brand: this.brand || undefined
+    , model: this.model || undefined
   };
 };
 
@@ -365,6 +422,13 @@ Device.prototype.toJSON = function toJSON() {
  */
 module.exports = function updater() {
   try {
+    console.log('[UserAgent] updating UserAgent!');
+    let oldRegexps = {
+      osParsersLength: osparserslength,
+      agentParsersLength: agentparserslength,
+      deviceParsersLength: deviceparserslength
+    };
+
     require('./lib/update').update(function updating(err, results) {
       if (err) {
         console.log('[useragent] Failed to update the parsed due to an error:');
@@ -385,6 +449,20 @@ module.exports = function updater() {
       // Device parsers:
       deviceparsers = regexps.device;
       deviceparserslength = deviceparsers.length;
+
+      let newRegexps = {
+        osParsersLength: osparserslength,
+        agentParsersLength: agentparserslength,
+        deviceParsersLength: deviceparserslength
+      }
+
+      if(oldRegexps.osParsersLength == newRegexps.osParsersLength &&
+        oldRegexps.agentParsersLength == newRegexps.agentParsersLength &&
+        oldRegexps.deviceParsersLength == newRegexps.deviceParsersLength) {
+          console.log('[UserAgent] No Changes!');
+        } else {
+          console.log('[UserAgent] Changes Found, New Set: ', newRegexps);
+        }
     });
   } catch (e) {
     console.error('[useragent] If you want to use automatic updating, please add:');

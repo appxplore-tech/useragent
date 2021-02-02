@@ -1,6 +1,6 @@
 {
   "name": "appx-useragent",
-  "version": "2.3.2",
+  "version": "2.3.3",
   "description": "Fastest, most accurate & effecient user agent string parser, uses Browserscope's research for parsing",
   "author": "Arnout Kazemier",
   "main": "./index.js",

@@ -1,6 +1,6 @@
 {
   "name": "appx-useragent",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "description": "Fastest, most accurate & effecient user agent string parser, uses Browserscope's research for parsing",
   "author": "Arnout Kazemier",
   "main": "./index.js",
@@ -33,9 +33,8 @@
   },
   "devDependencies": {
     "assume": "1.5.x",
-    "mocha": "5.0.x",
+    "mocha": "9.0.0",
     "pre-commit": "1.2.x",
-    "request": "^2.88.0",
     "semver": "5.5.x",
     "yamlparser": "0.0.x"
   },
@@ -50,6 +49,7 @@
     "prepublish": "npm run update"
   },
   "dependencies": {
+    "axios": "0.21.1",
     "lru-cache": "4.1.x",
     "tmp": "0.0.x"
   }
